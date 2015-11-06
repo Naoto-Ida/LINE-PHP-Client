@@ -12,13 +12,13 @@ class LineClient
     $this->token = $newToken;
   }
 
-  private function request($params = null) {
+  private function request($api, $params = null) {
     $headers = [
       "Content-Type: application/json",
       "Authorization: Bearer ".$this->token
     ];
     $c = curl_init();
-    curl_setopt($c, CURLOPT_URL, $this->BASE_API_URL."profile");
+    curl_setopt($c, CURLOPT_URL, $this->BASE_API_URL.$api);
     curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
     
@@ -32,8 +32,12 @@ class LineClient
   }
 
   public function getUserProfile() {
-    return $this->request();
+    return $this->request("/profile");
   }
+
+  public function getFriends() {
+    return $this->request("/friends");
+   }
 
 }
 ?>
